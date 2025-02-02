@@ -65,7 +65,7 @@ SWEP.EFTErgo = 50
 SWEP.BarrelLength = 30
 SWEP.Ammo = "Buckshot"
 SWEP.Firemodes = {
-    { Mode = 1, PrintName = "Single action", PoseParam = 1, EFTSingleAction = true, ManualAction = true, RPM = 300, TriggerDelay = false, TriggerStartFireAnim = false, RecoilKickMult = 0.75 },
+    { Mode = 1, PrintName = "Single action", PoseParam = 1, EFTSingleAction = true, ManualAction = true, RPM = 300, TriggerDelayTime = 0.05, RecoilKickMult = 0.75 },
     { Mode = 1, PrintName = "Double action", PoseParam = 2  },
 }
 
@@ -206,6 +206,8 @@ local function spindelay(swep) -- setting nwint not in start of anim but while o
     end)
 end
 
+local infammo = GetConVar("arc9_infinite_ammo")
+
 SWEP.Hook_TranslateAnimation = function(swep, anim)
     local elements = swep:GetElements()
 
@@ -277,7 +279,7 @@ SWEP.Hook_TranslateAnimation = function(swep, anim)
     elseif anim == "reload_insert" then
         if swep.afterreloadstart then
             swep.roundcount = clip
-            local reserve = math.Clamp(swep:GetOwner():GetAmmoCount(swep.Ammo), 0, 5)
+            local reserve = infammo:GetBool() and 5 or math.Clamp(swep:GetOwner():GetAmmoCount(swep.Ammo), 0, 5)
             if reserve == 0 then reserve = 5 end
             if swep.fistful then 
                 swep.roundcount = reserve -- real ammo count in hand
@@ -487,7 +489,7 @@ local drawa = { { s = path .. "mr133_draw.ogg", t = 0 } }
 local holstera = { { s = path .. "mr133_holster.ogg", t = 0 } }
 local fireda = { { s = path .. "rhino_hammer_release.ogg", t = 0.06 } }
 local firesa = { { s = path .. "rhino_hammer_release.ogg", t = 0 } }
-local firedadry = { { s = path .. "rhino_hammer_release.ogg", t = 0.17 } }
+local firedadry = { { s = path .. "rhino_hammer_release.ogg", t = 0.1 } }
 local firesadry = {
     { s = path .. "rhino_hammer_release.ogg", t = 0 },
     { s = randspin, t = 6/24 },
@@ -552,11 +554,11 @@ SWEP.Animations = {
     ["fire_sa__3"] = { Source = "fire_sa__3", EventTable = firesa, NoIdle = true },
     ["fire_sa__4"] = { Source = "fire_sa__4", EventTable = firesa, NoIdle = true },
 
-    ["fire_da_dry__0"] = { Source = "fire_da__1", EventTable = firedadry },
-    ["fire_da_dry__1"] = { Source = "fire_da__2", EventTable = firedadry },
-    ["fire_da_dry__2"] = { Source = "fire_da__3", EventTable = firedadry },
-    ["fire_da_dry__3"] = { Source = "fire_da__4", EventTable = firedadry },
-    ["fire_da_dry__4"] = { Source = "fire_da__0", EventTable = firedadry },
+    ["fire_da_dry__0"] = { Source = "fire_da__1", EventTable = firedadry, Mult = 1.35 },
+    ["fire_da_dry__1"] = { Source = "fire_da__2", EventTable = firedadry, Mult = 1.35 },
+    ["fire_da_dry__2"] = { Source = "fire_da__3", EventTable = firedadry, Mult = 1.35 },
+    ["fire_da_dry__3"] = { Source = "fire_da__4", EventTable = firedadry, Mult = 1.35 },
+    ["fire_da_dry__4"] = { Source = "fire_da__0", EventTable = firedadry, Mult = 1.35 },
 
     ["fire_dry__0"] = { Source = "fire_dry__0", EventTable = firesadry },
     ["fire_dry__1"] = { Source = "fire_dry__1", EventTable = firesadry },
@@ -777,11 +779,8 @@ SWEP.Hook_ModifyBodygroups = function(swep, data)
 end
 
 SWEP.Hook_HideBones = function(swep, bons)
-    -- local rc = swep:GetNWInt("EFTRevolverRoundCount", 5) or 5
-    -- bons["patron_in_weapon_001"]
-    -- bons["shellport_001"] = !(rc > 0) or !(bons["patron_in_weapon_001"] == true)
-
     local loaded = swep:GetLoadedRounds()
+
     bons["shellport_001"] = loaded > 4
     bons["shellport_002"] = loaded > 3
     bons["shellport_003"] = loaded > 2
@@ -789,21 +788,6 @@ SWEP.Hook_HideBones = function(swep, bons)
     bons["shellport_005"] = loaded > 0
 
     return bons
-
-    -- if bons["mag_pkm_zid_pk_std_762x54r_100"] then return bons end -- hiding everything
-
-    -- local gets = swep:GetEFTShootedRounds()
-    
-    -- for i = 1, 25 do 
-    --     local funnynum = string.format("%03d", i)
-
-    --     if i > gets then
-    --         swep.EFTshellsfunnytable["empty_link_" .. funnynum] = true 
-    --     else
-    --         swep.EFTshellsfunnytable["empty_link_" .. funnynum] = false  
-    --     end
-    -- end
-    -- return swep.EFTshellsfunnytable
 end
 
 SWEP.Attachments = {
@@ -811,16 +795,21 @@ SWEP.Attachments = {
         PrintName = "Barrel",
         Category = "eft_mts255_barrel",
         Bone = "mod_barrel",
-        -- Installed = "eft_mts255_barrel_510",
+        Installed = "eft_mts255_barrel_std",
         Pos = Vector(0, 0, 0),
         Ang = Angle(0, -90, 0),
         Icon_Offset = Vector(0, 0, 0),
+        SubAttachments = {
+            {
+                Installed = "eft_mts255_muzzle_std"
+            },
+        }
     },
     {
         PrintName = "Handguard",
         Category = "eft_mts255_hg",
         Bone = "mod_handguard",
-        -- Installed = "eft_mts255_hg_wood",
+        Installed = "eft_mts255_hg_std",
         Pos = Vector(0, 0, 0),
         Ang = Angle(0, -90, 0),
         Icon_Offset = Vector(0, 0, 0),
@@ -829,7 +818,7 @@ SWEP.Attachments = {
         PrintName = "Stock",
         Category = "eft_mts255_stock",
         Bone = "mod_stock",
-        -- Installed = "eft_mts255_stock_wood",
+        Installed = "eft_mts255_stock_std",
         Pos = Vector(0, 0, 0),
         Ang = Angle(0, 0, 0),
         Icon_Offset = Vector(0, 0, 0),
@@ -847,7 +836,7 @@ SWEP.Attachments = {
         PrintName = "Magazine",
         Category = "eft_mts255_mag",
         Bone = "mod_magazine",
-        -- Installed = "eft_mts255_mag_std",
+        Installed = "eft_mts255_mag_std",
         Pos = Vector(0, 0, 0),
         Ang = Angle(0, -90, 0),
         Icon_Offset = Vector(0, 0, 0),
