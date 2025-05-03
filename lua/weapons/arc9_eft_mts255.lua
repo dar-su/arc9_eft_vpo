@@ -852,7 +852,7 @@ SWEP.Attachments = {
     },
     {
         PrintName = "Custom slot",
-        Category = {"eft_custom_slot", "eft_custom_slot_mts255"},
+        Category = {"eft_custom_slot", "eft_custom_slot_mts255", "eft_custom_slot_revolver"},
         Bone = "mod_stock",
         Pos = Vector(0, -5, -4),
         Ang = Angle(0, 90, 0),
