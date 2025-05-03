@@ -5,22 +5,18 @@ SWEP.Spawnable = true
 
 ------------------------- |||           Trivia            ||| -------------------------
 
-ARC9:AddPhrase("eft_weapon_vpo215", "VPO-215 \"Gornostay\"", "en")
-ARC9:AddPhrase("eft_weapon_vpo215", "ВПО-215 \"Горностай\"", "ru")
-ARC9:AddPhrase("eft_weapon_vpo215", "WPO-215 \"ermine :3\"", "uwu")
-
 SWEP.PrintName = ARC9:GetPhrase("eft_weapon_vpo215")
-SWEP.Description = [[VPO-215 "Gornostay" ("Ermine") is a Russian-made bolt-action rifle designed for hunting and sport shooting, manufactured by Molot Arms. Chambered in .366 TKM ammo.]]
+SWEP.Description = "eft_weapon_vpo215_desc"
 
-SWEP.Class = ARC9:GetPhrase("eft_class_weapon_boltsnip")
+SWEP.Class = "eft_class_weapon_boltsnip"
 SWEP.SubCategory = ARC9:GetPhrase("eft_subcat_snip")
 
 SWEP.Trivia = {
-    [ARC9:GetPhrase("eft_trivia_manuf") .. "1"] = ARC9:GetPhrase("eft_trivia_manuf_molot"),
-    [ARC9:GetPhrase("eft_trivia_cal") .. "2"] = ".366 TKM",
-    [ARC9:GetPhrase("eft_trivia_act") .. "3"] = ARC9:GetPhrase("eft_trivia_act_bolt"),
-    [ARC9:GetPhrase("eft_trivia_country") .. "4"] = ARC9:GetPhrase("eft_trivia_country_rus"),
-    [ARC9:GetPhrase("eft_trivia_year") .. "5"] = "2019 ?"
+    ["eft_trivia_manuf1"] = "eft_trivia_manuf_molot",
+    ["eft_trivia_cal2"] = "eft_trivia_calibr_366tkm",
+    ["eft_trivia_act3"] = "eft_trivia_act_bolt",
+    ["eft_trivia_country4"] = "eft_trivia_country_rus",
+    ["eft_trivia_year5"] = "2019 ?"
 }
 
 

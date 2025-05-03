@@ -5,21 +5,18 @@ SWEP.Spawnable = true
 
 ------------------------- |||           Trivia            ||| -------------------------
 
-ARC9:AddPhrase("eft_weapon_vpo101", "VPO-101 \"Vepr-Hunter\"", "en")
-ARC9:AddPhrase("eft_weapon_vpo101", "ВПО-101 \"Вепрь-Хантер\"", "ru")
-ARC9:AddPhrase("eft_weapon_vpo101", "WPO-101 \"Wepw-Huntew\"", "uwu")
 SWEP.PrintName = ARC9:GetPhrase("eft_weapon_vpo101")
-SWEP.Description = [[A semi-automatic 7.62x51mm caliber hunting carbine. It was created on the platform of Kalashnikov machine gun (RPK) and has a similar appearance, weight and dimensions. Designed for professional and amateur hunting of medium and big game, as well as sporting use.]]
+SWEP.Description = "eft_weapon_vpo101_desc"
 
-SWEP.Class = ARC9:GetPhrase("eft_class_weapon_carb")
+SWEP.Class = "eft_class_weapon_carb"
 SWEP.SubCategory = ARC9:GetPhrase("eft_subcat_carb")
 
 SWEP.Trivia = {
-    [ARC9:GetPhrase("eft_trivia_manuf") .. "1"] = ARC9:GetPhrase("eft_trivia_manuf_molot"),
-    [ARC9:GetPhrase("eft_trivia_cal") .. "2"] = "7.62x51mm NATO",
-    [ARC9:GetPhrase("eft_trivia_act") .. "3"] = ARC9:GetPhrase("eft_trivia_act_gas"),
-    [ARC9:GetPhrase("eft_trivia_country") .. "4"] = ARC9:GetPhrase("eft_trivia_country_ru"),
-    [ARC9:GetPhrase("eft_trivia_year") .. "5"] = "2000 ?"
+    ["eft_trivia_manuf1"] = "eft_trivia_manuf_molot",
+    ["eft_trivia_cal2"] = "eft_trivia_calibr_762x51",
+    ["eft_trivia_act3"] = "eft_trivia_act_gas",
+    ["eft_trivia_country4"] = "eft_trivia_country_ru",
+    ["eft_trivia_year5"] = "2000 ?"
 }
 
 -- SWEP.StandardPresets = {
