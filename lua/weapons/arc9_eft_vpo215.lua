@@ -431,6 +431,8 @@ SWEP.Animations = {
             { s = path .. "rem700_bolt_2.ogg", t = 0.5 - 0.1 },
             { s = randspin, t = 0.78 },     
         },
+        RestoreAmmo = -1,
+        EjectAt = 0.45,
     },    
     ["reload_insert"] = {
         Source = "sgreload_insert",
